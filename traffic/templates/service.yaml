@@ -4,6 +4,9 @@ metadata:
   name: {{ include "traffic.fullname" . }}
   labels:
     {{- include "traffic.labels" . | nindent 4 }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9190"
 spec:
   type: {{ .Values.service.type }}
   ports:
