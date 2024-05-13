@@ -3,11 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "traffic.fullname" . }}
   labels:
-    # {{- include "traffic.labels" . | nindent 4 }}
-    monitoring: enabled
-  annotations:
-    prometheus.io/scrape: 'true'
-    prometheus.io/port: '9113'
+    {{- include "traffic.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -35,16 +31,6 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: nginx-exporter
-          image: 'nginx/nginx-prometheus-exporter:0.10.0'
-          args:
-            - '-nginx.scrape-uri=http://localhost/nginx_status'
-          resources:
-            limits:
-              memory: 128Mi
-              cpu: 500m
-          ports:
-            - containerPort: 9113
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

@@ -3,11 +3,7 @@ kind: Service
 metadata:
   name: {{ include "traffic.fullname" . }}
   labels:
-    # {{- include "traffic.labels" . | nindent 4 }}
-    monitoring: enabled
-  # annotations:
-  #   prometheus.io/scrape: "true"
-  #   prometheus.io/port: "80"
+    {{- include "traffic.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
