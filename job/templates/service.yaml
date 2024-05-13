@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: {{ include "jobs.fullname" . }}
   labels:
-    {{- include "jobs.labels" . | nindent 4 }}
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "80"
+    # {{- include "jobs.labels" . | nindent 4 }}
+    monitoring: enabled
+  # annotations:
+  #   prometheus.io/scrape: "true"
+  #   prometheus.io/port: "80"
 spec:
   type: {{ .Values.service.type }}
   ports:
